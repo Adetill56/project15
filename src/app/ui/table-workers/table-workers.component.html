@@ -1,0 +1,43 @@
+<div class="row" *ngIf="workers.length > 0">
+    <div class="col-12">
+        <h5>{{title}}</h5>
+    </div>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th scope="col" [style.width]="'100px'">id</th>
+                <th scope="col" [style.width]="'40%'">Имя</th>
+                <th scope="col">Фамилия</th>
+                <th scope="col" [style.width]="'150px'"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let worker of workers">
+                <th scope="row">{{worker.id}}</th>
+                <ng-container *ngIf="worker.editMod === false; else onEdit">
+                    <td>{{worker.name}}</td>
+                    <td>{{worker.surname}}</td>
+                </ng-container>
+                <ng-template #onEdit>
+                    <input type="text" class="form-control" [(ngModel)]="worker.name">
+                    <input type="text" class="form-control" [(ngModel)]="worker.surname">
+                    <select class="custom-select" [(ngModel)]="worker.type">
+                        <option [ngValue] = "myWorkerType.programmer">Программист</option>
+                        <option [ngValue] = "myWorkerType.designer">Дизайнер</option>
+                        <option [ngValue] = "myWorkerType.copywriter">Рекламщик</option>
+                        <option [ngValue] = "myWorkerType.manager">Менеджер</option>
+                    </select>
+                    <button class="btn btn-outline-primary btn-sm" (click)="onSaveWorker(worker)">Сохранить</button>
+                </ng-template>
+                <td><button class="btn btn-outline-danger btn-sm" (click)="onDeleteWorker(worker.id)">
+                    Удалить
+                </button>
+                    <button class="btn btn-outline-success btn-sm" [disabled]="worker.editMod" (click)="onEditWorker(worker)">
+                    Редактировать
+                </button></td>
+            </tr>
+
+        </tbody>
+    </table>
+</div>

@@ -31,5 +31,4 @@ export class AppComponent {
     this.workers.push(worker);
   }
 
-
 }

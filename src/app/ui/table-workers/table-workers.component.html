@@ -1,43 +1,39 @@
 <div class="row" *ngIf="workers.length > 0">
-    <div class="col-12">
+    <div class="col-12 mt-2">
         <h5>{{title}}</h5>
     </div>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th scope="col" [style.width]="'100px'">id</th>
-                <th scope="col" [style.width]="'40%'">Имя</th>
-                <th scope="col">Фамилия</th>
-                <th scope="col" [style.width]="'150px'"></th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let worker of workers">
-                <th scope="row">{{worker.id}}</th>
-                <ng-container *ngIf="worker.editMod === false; else onEdit">
-                    <td>{{worker.name}}</td>
-                    <td>{{worker.surname}}</td>
-                </ng-container>
-                <ng-template #onEdit>
-                    <input type="text" class="form-control" [(ngModel)]="worker.name">
-                    <input type="text" class="form-control" [(ngModel)]="worker.surname">
-                    <select class="custom-select" [(ngModel)]="worker.type">
-                        <option [ngValue] = "myWorkerType.programmer">Программист</option>
-                        <option [ngValue] = "myWorkerType.designer">Дизайнер</option>
-                        <option [ngValue] = "myWorkerType.copywriter">Рекламщик</option>
-                        <option [ngValue] = "myWorkerType.manager">Менеджер</option>
-                    </select>
-                    <button class="btn btn-outline-primary btn-sm" (click)="onSaveWorker(worker)">Сохранить</button>
-                </ng-template>
-                <td><button class="btn btn-outline-danger btn-sm" (click)="onDeleteWorker(worker.id)">
-                    Удалить
-                </button>
-                    <button class="btn btn-outline-success btn-sm" [disabled]="worker.editMod" (click)="onEditWorker(worker)">
-                    Редактировать
-                </button></td>
-            </tr>
-
-        </tbody>
-    </table>
+    <div class="col-1 font-weight-bold">id</div>
+    <div class="col-2 font-weight-bold">Имя</div>
+    <div class="col-2 font-weight-bold">Фамилия</div>
+    <div class="col-2 font-weight-bold">Номер</div>
+    <div class="col-2 font-weight-bold">Тип</div>
+    <div class="col-12" *ngFor="let worker of workers">
+        <form class="row d-flex flex-row mt-2" [formGroup]="worker.workerForm">
+            <div class="col-1">
+                {{worker.id}}
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" formControlName="name">
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" formControlName="surname">
+            </div>
+            <div class="col-2">
+                <input type="text" class="form-control" formControlName="phone" [textMask]="{mask: mask, showMask : true}">
+            </div>
+            <div class="col-2">
+                <select class="custom-select" formControlName="type">
+                <option [ngValue]="myWorkerType.programmer">Программист</option>
+                <option [ngValue]="myWorkerType.designer">Дизайнер</option>
+                <option [ngValue]="myWorkerType.copywriter">Рекламщик</option>
+                <option [ngValue]="myWorkerType.manager">Менеджер</option>
+            </select>
+            </div>
+            <div class="col-2 d-flex flex-column">
+                <button class="btn btn-primary btn-sm mt-1" (click)="onEditWorker(this.worker)">Редактировать</button>
+                <button class="btn btn-success btn-sm mt-1" (click)="onSaveWorker(this.worker)" [disabled]="worker.workerForm.disabled || worker.workerForm.invalid">Сохранить</button>
+                <button class="btn btn-danger btn-sm mt-1" (click)="onDeleteWorker(worker.id)">Удалить</button>
+            </div>
+        </form>
+    </div>
 </div>

@@ -18,6 +18,7 @@ export class AddformWorkerComponent implements OnInit {
 
   @Output() addWorker = new EventEmitter<MyWorker>();
 
+
   constructor() { }
 
   ngOnInit(): void {
@@ -30,28 +31,18 @@ export class AddformWorkerComponent implements OnInit {
   }
 
   onAddWorker() {
-    let worker: MyWorker = {
-      name: this.workerForm.value.name,
-      surname: this.workerForm.value.surname,
-      type: this.workerForm.value.type,
-      phone: this.workerForm.value.phone,
-    }
-    if (worker.name !== '' && worker.surname !== '') {
-      worker.workerForm = new FormGroup({
-        name: new FormControl(worker.name, [Validators.required, Validators.pattern('[а-яА-ЯёЁa-zA-Z]+')]),
-        surname: new FormControl(worker.surname, [Validators.required, Validators.pattern('[а-яА-ЯёЁa-zA-Z]+')]),
-        type: new FormControl(worker.type, [Validators.required]),
-        phone: new FormControl(worker.phone, [Validators.required])
-      });
-      worker.workerForm.disable();
-      this.workerForm.controls.name.reset();
-      this.workerForm.controls.surname.reset();
-      this.workerForm.controls.phone.reset();
-      this.defaultWorkerType = this.myWorkerType.programmer;
-      this.addWorker.emit(worker);
-    } else {
-      alert("Введите имя или фамилию работника!");
-    }
+    let phone = '' + this.workerForm.controls.phone.value;
+    console.log(phone.length);
+    console.log(phone);
+    if (phone.replace(/\D/g, '').length == 11) {
+      this.addWorker.emit(this.workerForm.value);
+    } else
+      alert('Проверьте правильность введенных данных');
+    this.defaultWorkerType = this.myWorkerType.programmer;
+    this.workerForm.controls.name.reset();
+    this.workerForm.controls.surname.reset();
+    this.workerForm.controls.phone.reset();
+
   }
 
 }

@@ -5,6 +5,7 @@ import { AppComponent } from './app.component';
 import { TableWorkersComponent } from './ui/table-workers/table-workers.component';
 import { AddformWorkerComponent } from './ui/addform-worker/addform-worker.component';
 import { TextMaskModule } from 'angular2-text-mask';
+import { HttpClientModule } from '@angular/common/http';
 
 @NgModule({
   declarations: [
@@ -17,7 +18,8 @@ import { TextMaskModule } from 'angular2-text-mask';
     BrowserModule,
     FormsModule,
     ReactiveFormsModule,
-    TextMaskModule
+    TextMaskModule,
+    HttpClientModule
   ],
   providers: [],
   bootstrap: [AppComponent]

@@ -1,7 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { MyWorker, MyWorkerType } from './shared/worker.model';
 import { HttpWorkerService } from './shared/services/http-worker.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { FindComponent } from './ui/find/find.component';
 
 @Component({
   selector: 'app-root',
@@ -13,6 +14,7 @@ export class AppComponent implements OnInit {
   workers: MyWorker[];
   myWorkerType = MyWorkerType;
   dataLoaded = false;
+  searchStr: string = '';
 
   constructor(private httpWorkerService: HttpWorkerService) {
 
@@ -22,6 +24,7 @@ export class AppComponent implements OnInit {
     this.getData().then(() => {
       this.dataLoaded = true;
     });
+
   }
   getByType(type: number) {
     return this.workers.filter(worker => worker.type === type);
@@ -75,6 +78,11 @@ export class AppComponent implements OnInit {
     } catch (err) {
       console.log(err);
     }
+  }
+
+  onSearchChanged(searchStr: string) {
+    this.searchStr = searchStr;
+    console.log(this.searchStr);
   }
 
 }

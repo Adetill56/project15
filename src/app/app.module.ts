@@ -6,12 +6,16 @@ import { TableWorkersComponent } from './ui/table-workers/table-workers.componen
 import { AddformWorkerComponent } from './ui/addform-worker/addform-worker.component';
 import { TextMaskModule } from 'angular2-text-mask';
 import { HttpClientModule } from '@angular/common/http';
+import { FilterworkersPipe } from './shared/pipes/filterworkers.pipe';
+import { FindComponent } from './ui/find/find.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     TableWorkersComponent,
-    AddformWorkerComponent
+    AddformWorkerComponent,
+    FilterworkersPipe,
+    FindComponent
 
   ],
   imports: [
